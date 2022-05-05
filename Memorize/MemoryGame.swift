@@ -9,7 +9,6 @@ import Foundation   // Basic struct(array...)
 
 struct MemoryGame<CardContent> where CardContent: Equatable{ //Generic
     private(set) var cards: Array<Card>  //MemoryGame.Card
-    //private(set): only choose can change faceup/matched...
     
     
     //willSet -> newValue , didSet -> oldValue
@@ -17,48 +16,16 @@ struct MemoryGame<CardContent> where CardContent: Equatable{ //Generic
     private var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get {
             //compute
-//            let faceUpCardIndeces = cards.indices.filter({ cards[$0].isFaceUp })
-//            return faceUpCardIndeces.oneAndOnly
-            
             cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly
-            
-            //filter
-//            var faceUpCardIndices = [Int]()
-//            for index in cards.indices {
-//                if cards[index].isFaceUp {
-//                    faceUpCardIndices.append(index)
-//                }
-//            }
-            
-            //extension
-//            if faceUpCardIndices.count == 1 {
-//                return faceUpCardIndices.first
-//            } else {
-//                return nil
-//            }
-            
         }
         set {
             cards.indices.forEach{cards[$0].isFaceUp = ($0 == newValue)}
-            
-//            for index in cards.indices {
-////                if index != indexOfTheOneAndOnlyFaceUpCard {
-//                cards[index].isFaceUp = (index == newValue)
-//                if index != newValue {
-//                    cards[index].isFaceUp = false
-//                } else {
-//                    cards[index].isFaceUp = true
-//                }
-//            }
-            
         }
     }
     
     
     mutating func choose(_ card: Card){
-//        if let chosenIndex = index(of: card) {
-//        if let chosenIndex = cards.firstIndex(where: { aCardInTheCardsArray in aCardInTheCardsArray.id == card.id }) {
-        //not && -> ,
+//        print("bonus: \(card.bonusRemaining)")
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }) ,
             !cards[chosenIndex].isFaceUp,
             !cards[chosenIndex].isMatched
@@ -68,40 +35,19 @@ struct MemoryGame<CardContent> where CardContent: Equatable{ //Generic
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
                 }
-//                indexOfTheOneAndOnlyFaceUpCard = nil
                 cards[chosenIndex].isFaceUp = true
             } else {
-//                for index in cards.indices {
-//                    cards[index].isFaceUp = false
-//                }
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
-            
-//        var chosenCard = cards[chosenIndex] //make copy! -> wrong!
-//        cards[chosenIndex].isFaceUp.toggle()
-            
-//        print("chosenCard = \(chosenCard)")
         }
-        print("\(cards)")
+//        print("\(cards)")
     }
-    /*
-    func index(of card : Card) -> Int? {
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
-            }
-        }
-//        return 0    //bogus! -> Int?
-        return nil
-    }
-    */
     
     mutating func shuffle() {
         cards.shuffle()
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) { //loose free init
-//        cards = Array<Card>()
         cards = []
         //add numberOfPairsOfCards * 2 cards to cards array
         for pairIndex in 0..<numberOfPairsOfCards {
@@ -113,9 +59,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable{ //Generic
     }
     
     struct Card: Identifiable {
-//        var id: ObjectIdentifier
         //MemoryGame.Card,  outside: 포커 게임 등이 있을 때 nesting
-//        var isFaceUp: Bool = false
         var isFaceUp = false {
             didSet {
                 if isFaceUp {

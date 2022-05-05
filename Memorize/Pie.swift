@@ -17,6 +17,7 @@ struct Pie: Shape {
         set {
             startAngle = Angle.radians(newValue.first)
             endAngle = Angle.radians(newValue.second)
+            print("start: \(startAngle), end: \(endAngle)")
         }
     }
     

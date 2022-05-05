@@ -43,7 +43,7 @@ struct Cardify: AnimatableModifier {
     }
     
     private struct DrawingConstants {
-        static let cornerRadius: CGFloat = 20
+        static let cornerRadius: CGFloat = 10
         static let lineWidth: CGFloat = 3
     }
 }

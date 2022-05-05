@@ -20,9 +20,7 @@ class EmojiMemoryGame: ObservableObject {
     private static let emojis = ["🚕", "⌚️", "🐼", "🦊", "🐻", "🐰", "🐸", "🐹", "🐧", "🍏", "🍓", "🍈", "🍇", "🍐", "🍌", "🍍", "🏐", "🏉", "🥋", "🏸"]
     //type function: the 'very' type function of the class
     private static func createMemoryGame() -> MemoryGame<String> {
-        //return 생략
         MemoryGame<String> (numberOfPairsOfCards: 5) { pairIndex in
-//            EmojiMemoryGame.emojis[pairIndex]
             emojis[pairIndex]  //static inside static: can remove
         }
     }
